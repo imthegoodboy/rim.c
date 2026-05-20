@@ -104,6 +104,126 @@ VALUES (104, NULL, 'Watchman', 104, 243400, 2400);
 
 
 
+```sql id="4gkq2n"
+-- Experiment: Employee Table Creation and Operations
+
+-- 1. Create Employee Table
+
+CREATE TABLE Employee (
+    EMPNO INT PRIMARY KEY,
+    ENAME VARCHAR(50) NOT NULL,
+    JOB VARCHAR(30),
+    MGR INT,
+    SAL DECIMAL(10,2)
+);
+
+-- Output:
+-- Query OK, 0 rows affected
+
+-- ---------------------------------------------------
+
+-- 2. Add COMMISSION Column with Domain Constraint
+
+ALTER TABLE Employee
+ADD COMMISSION DECIMAL(10,2)
+CHECK (COMMISSION >= 0);
+
+-- Output:
+-- Query OK, 0 rows affected
+
+-- ---------------------------------------------------
+
+-- 3. Insert Five Records
+
+INSERT INTO Employee 
+(EMPNO, ENAME, JOB, MGR, SAL, COMMISSION)
+VALUES
+(101, 'Ramesh', 'Manager', NULL, 75000, 5000),
+(102, 'Suresh', 'Clerk', 101, 25000, 1000),
+(103, 'Mahesh', 'Analyst', 101, 45000, 3000),
+(104, 'Anita', 'HR', 101, 40000, 2000),
+(105, 'Kiran', 'Salesman', 101, 30000, 1500);
+
+-- Output:
+-- Query OK, 5 rows affected
+
+-- Display Table Records
+
+SELECT * FROM Employee;
+
+-- Expected Output:
+-- +--------+---------+----------+------+----------+------------+
+-- | EMPNO  | ENAME   | JOB      | MGR  | SAL      | COMMISSION |
+-- +--------+---------+----------+------+----------+------------+
+-- | 101    | Ramesh  | Manager  | NULL | 75000.00 | 5000.00    |
+-- | 102    | Suresh  | Clerk    | 101  | 25000.00 | 1000.00    |
+-- | 103    | Mahesh  | Analyst  | 101  | 45000.00 | 3000.00    |
+-- | 104    | Anita   | HR       | 101  | 40000.00 | 2000.00    |
+-- | 105    | Kiran   | Salesman | 101  | 30000.00 | 1500.00    |
+-- +--------+---------+----------+------+----------+------------+
+
+-- ---------------------------------------------------
+
+-- 4. Update JOB Column Details
+
+UPDATE Employee
+SET JOB = 'Senior Clerk'
+WHERE EMPNO = 102;
+
+-- Output:
+-- Query OK, 1 row affected
+
+-- Verify Updated Record
+
+SELECT EMPNO, ENAME, JOB
+FROM Employee
+WHERE EMPNO = 102;
+
+-- Expected Output:
+-- +--------+---------+---------------+
+-- | EMPNO  | ENAME   | JOB           |
+-- +--------+---------+---------------+
+-- | 102    | Suresh  | Senior Clerk  |
+-- +--------+---------+---------------+
+
+-- ---------------------------------------------------
+
+-- 5. Rename Column JOB to DESIGNATION
+
+ALTER TABLE Employee
+CHANGE JOB DESIGNATION VARCHAR(30);
+
+-- Output:
+-- Query OK, 0 rows affected
+
+-- Verify Table Structure
+
+DESC Employee;
+
+-- ---------------------------------------------------
+
+-- 6. Delete Employee with EMPNO = 105
+
+DELETE FROM Employee
+WHERE EMPNO = 105;
+
+-- Output:
+-- Query OK, 1 row affected
+
+-- Display Remaining Records
+
+SELECT * FROM Employee;
+
+-- Expected Output:
+-- +--------+---------+---------------+------+----------+------------+
+-- | EMPNO  | ENAME   | DESIGNATION   | MGR  | SAL      | COMMISSION |
+-- +--------+---------+---------------+------+----------+------------+
+-- | 101    | Ramesh  | Manager       | NULL | 75000.00 | 5000.00    |
+-- | 102    | Suresh  | Senior Clerk  | 101  | 25000.00 | 1000.00    |
+-- | 103    | Mahesh  | Analyst       | 101  | 45000.00 | 3000.00    |
+-- | 104    | Anita   | HR            | 101  | 40000.00 | 2000.00    |
+-- +--------+---------+---------------+------+----------+------------+
+```
 
 
 
