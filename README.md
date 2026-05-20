@@ -1,5 +1,4 @@
-Here’s the cleaned and properly separated version of all your SQL lab programs with clear headings like **Program 1, Program 2, Program 3...** and without the extra outputs/comments clutter.
-
+ 
 # Program 1
 
 ```sql
